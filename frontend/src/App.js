@@ -1,24 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { AuthProvider } from './contexts/AuthContext';  // Add this import
+import theme from './styles/theme';
+import Navbar from './components/layout/Navbar';
+import Home from './components/pages/Home';
+import Login from './components/auth/Login';
+import Signup from './components/auth/Signup';
+import Profile from './components/pages/Profile';
+import Team from './components/pages/Team';
+import DataEntry from './components/pages/DataEntry';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      <AuthProvider>  {/* Add this wrapper */}
+        <CssBaseline />
+        <Router>
+          <div className="App">
+            <Navbar />
+            <main style={{ padding: '2rem' }}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/signup" element={<Signup />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/team" element={<Team />} />
+                <Route path="/data-entry" element={<DataEntry />} />
+              </Routes>
+            </main>
+          </div>
+        </Router>
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 
